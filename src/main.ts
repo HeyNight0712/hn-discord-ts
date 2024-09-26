@@ -21,14 +21,23 @@ client.on('ready', async () => {
 
 client.on('interactionCreate', async (interaction) => {
     if (!interaction.isChatInputCommand()) return;
-    if (!(interaction.commandName === 'help')) return;
 
-    await interaction.reply({
-        content: '無法幫助 QQ',
-        ephemeral: true
-    });
+    if (interaction.commandName === 'help') {
+        await interaction.reply({
+            content: '無法幫助 QQ',
+            ephemeral: true
+        });
 
-    logger.info('響應成功');
+        return;
+    } else if (interaction.commandName === 'info') {
+        let targetUser = interaction.options.getUser('target');
+        targetUser = targetUser ? targetUser : interaction.user;
+
+        await interaction.reply({
+            content: `你查詢的成員是: ${targetUser.globalName ? targetUser.globalName : targetUser.username}`,
+            ephemeral: true
+        })
+    }
 });
 
 client.login(config.TOKEN);

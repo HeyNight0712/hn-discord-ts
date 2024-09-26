@@ -7,10 +7,18 @@ export const registerCommands = async () => {
         new SlashCommandBuilder()
             .setName("help")
             .setDescription("幫助指令")
+            .toJSON(),
+        new SlashCommandBuilder()
+            .setName("info")
+            .setDescription("查詢成員")
+            .addUserOption(option => option
+                .setName("target")
+                .setDescription("查詢成員")
+                .setRequired(false))
             .toJSON()
     ];
 
-    const rest = new REST({ version: '10'}).setToken(<string>config.TOKEN);
+    const rest = new REST({version: '10'}).setToken(<string>config.TOKEN);
 
     try {
         logger.info("註冊指令...")
